@@ -4,27 +4,9 @@
 #include <stdlib.h>
 #include <istream>
 #include <iomanip>
+#include "minigame2.h"
 #define HEART   "\xE2\x99\xA5"
 using namespace std;
-void ttt_printwin(){      //input parameters: none, operations: prints the victory symbol, returns: none
-cout << "  ___      ___  __     ______  ___________  ______     _______   ___  ___ "  << endl;
-cout << "|\"  \\    /\"  ||\" \\   /\" _  \"\\(\"     _   \")/    \" \\   /\"      \\ |\"  \\/\"  | "  << endl;
-cout << "\\   \\  //  / ||  | (: ( \\___))__/  \\\\__/// ____  \\ |:        | \\   \\  /  "  << endl;
-cout << " \\\\  \\/. ./  |:  |  \\/ \\        \\\\_ /  /  /    ) :)|_____/   )  \\\\  \\/   "  << endl;
-cout << "  \\.    //   |.  |  //  \\ _     |.  | (: (____/ //  //      /   /   /    "  << endl;
-cout << "   \\\\   /    /\\  |\\(:   _) \\    \\:  |  \\        /  |:  __   \\  /   /     "  << endl;
-cout << "    \\__/    (__\\_|_)\\_______)    \\__|   \\\"_____/   |__|  \\___)|___/   "  << endl;
-}
-
-void ttt_printlose(){//input parameters: none, operations: prints the lose symbol, returns: none
-cout << "  ___        ______    ________  _______  " << endl;
-cout << "|\"  |      /    \" \\  /\"       )/\"     \"| " << endl;
-cout << "||  |     // ____  \\(:   \\___/(: ______) " << endl;
-cout << "|:  |    /  /    ) :)\\___  \\   \\/    |   " << endl;
-cout << "\\  |___(: (____/ //  __/  \\\\  // ___)_  " << endl;
-cout << "( \\_|:  \\\\        /  /\" \\   :)(:      \"| " << endl;
-cout << "\\_______)\\\"_____/  (_______/  \\_______)" << endl;
-}
 
 void ttt_printcastle(){//input parameters: none, operations: prints the mysterious castle, returns: none
   cout << "            +"<<endl;
@@ -149,7 +131,8 @@ bool ttt_checkvictory(char grid[3][3], char player){ //input parameters: the gri
   }
   return false;
 }
-int ttt_main(){                       //the main for tic tac toe
+
+bool game_tictactoe(){                       //the main for tic tac toe
   char ttt_grid[3][3] = {'1','2','3','4','5','6','7','8','9'}; //grid for tic tac toe as array
   char devil_selectable[] = {'1','2','3','4','5','6','7','8','9'}; //an array that include all selectable choices, it will be updated everytime a move is made, it is for the reference of the computer
   string con1, con2;
@@ -182,8 +165,8 @@ int ttt_main(){                       //the main for tic tac toe
     }
     ttt_update_selectable(devil_selectable, playermove);
     if (num_selectable == 0) {
-      cout << "it is a tie" << endl;
-      return 2;
+      cout << "It is a tie, but you did not lose any health" << endl;
+      return 1;
       break;
     }
     cout << "devils turn!" << endl;
@@ -258,7 +241,7 @@ void killer_print_fire(){ //function to print out a mushroom cloud and the story
   cout <<"_____.,-#%&$@%#&#~,._____"<<endl;
 }
 
-int killer_main(){ //main for the killer games
+bool game_killer(){ //main for the killer games
   srand(time(NULL));
   //arrays for the clues
   string people[5] = {"count", "dutches", "solomon", "ted", "escobar"};
@@ -339,7 +322,7 @@ void number_instructions(){
   cout << "is larger or smaller than you destined number." << endl;
 }
 
-int number_main(){
+bool game_number(){
   //get a random number from the range 1 - 100
   srand(time(0));
   int destinated_num = (rand() % 100) + 1;
@@ -455,7 +438,6 @@ cout << "     ~~~~" << endl;
 cout << "YOU USED SPECAIL ATTACK: SWORD OF POWER!" << endl;
 }
 
-
 char rps_devils_choice(){//input parameter none, fucntion takes random computer choice of either rock paper or scissor, return: the choice of the computer
   srand(time(0));
   int choice = rand() % 3;
@@ -507,7 +489,7 @@ string rps_who_wins(char devil, string hero){ //input parameter takes in the use
   }
 }
 
-int rps_main(){ //main for rock paper scissors
+bool gamerockpaperscissors(){ //main for rock paper scissors
   rps_instructions();
   //health of players
   int special = 0;
@@ -552,7 +534,4 @@ int rps_main(){ //main for rock paper scissors
     }
   }
 }
-int main(){
-  ttt_main();
 
-}
