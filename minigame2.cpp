@@ -489,7 +489,7 @@ string rps_who_wins(char devil, string hero){ //input parameter takes in the use
   }
 }
 
-bool gamerockpaperscissors(){ //main for rock paper scissors
+bool game_rockpaperscissors(){  //main for rock paper scissors
   rps_instructions();
   //health of players
   int special = 0;
