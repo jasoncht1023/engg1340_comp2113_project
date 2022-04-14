@@ -2,6 +2,7 @@
 #include <ctime>
 #include <string>
 #include <stdlib.h>
+#include <istream>
 #include <iomanip>
 #define HEART   "\xE2\x99\xA5"
 using namespace std;
@@ -151,16 +152,16 @@ bool ttt_checkvictory(char grid[3][3], char player){ //input parameters: the gri
 int ttt_main(){                       //the main for tic tac toe
   char ttt_grid[3][3] = {'1','2','3','4','5','6','7','8','9'}; //grid for tic tac toe as array
   char devil_selectable[] = {'1','2','3','4','5','6','7','8','9'}; //an array that include all selectable choices, it will be updated everytime a move is made, it is for the reference of the computer
-  char con1, con2;
+  string con1, con2;
   char playermove;
   int num_selectable = 9;
   ttt_printcastle();
-  cout << "press any character to continue > ";
-  cin >> con1;
+  cout << "press return to continue > ";
+  getline(cin, con1);
   system("clear");
   ttt_printlock();
-  cout << "press any character to continue > ";
-  cin >> con2;
+  cout << "press return to continue > ";
+  getline(cin, con2);
   system("clear");
   ttt_printgrid(ttt_grid);
   while (num_selectable >= 0){                //a while loop that keeps going until there are no seleactable choices and a victory or a tie is achieved
@@ -169,6 +170,16 @@ int ttt_main(){                       //the main for tic tac toe
     ttt_playerdecision(ttt_grid, playermove);
     ttt_printgrid(ttt_grid);
     num_selectable -= 1;
+    if (ttt_checkvictory(ttt_grid, 'X') == true){
+      cout << "You won!" << endl;
+      return 1;
+      break;
+    }
+    if (ttt_checkvictory(ttt_grid, 'O') == true){
+      cout << "You lost...better luck next time" << endl;
+      return 0;
+      break;
+    }
     ttt_update_selectable(devil_selectable, playermove);
     if (num_selectable == 0) {
       cout << "it is a tie" << endl;
@@ -182,13 +193,13 @@ int ttt_main(){                       //the main for tic tac toe
     ttt_update_selectable(devil_selectable, devil_selectable[num]);
     ttt_printgrid(ttt_grid);
     if (ttt_checkvictory(ttt_grid, 'X') == true){
-      ttt_printwin();
+      cout << "You won!" << endl;
       return 1;
       break;
     }
     if (ttt_checkvictory(ttt_grid, 'O') == true){
-      ttt_printlose();
-      return 2;
+      cout << "You lost...better luck next time" << endl;
+      return 0;
       break;
     }
   }
@@ -260,9 +271,9 @@ int killer_main(){ //main for the killer games
   killer_randomise(weapon);
   //print instructions
   killer_print_instructions();
-  cout << "press any character to continue >";
-  char next;
-  cin >> next;
+  cout << "press return to continue >";
+  string next;
+  getline(cin, next);
   system("clear");
   //print the shuffled clues
   killer_printarray(people);
@@ -278,14 +289,14 @@ int killer_main(){ //main for the killer games
   int killer = rand()%5;
   cout << "---------------------------------------------" << endl;
   cout << "have you finish examining the clues sherlock?" << endl;
-  cout << "press any character to continue >";
-  char next1;
-  cin >> next1;
+  cout << "press return to continue >";
+  string next1;
+  getline(cin, next1);
   system("clear");
   killer_print_fire();
-  cout << "press any character to continue >";
-  char next2;
-  cin >> next2;
+  cout << "press return to continue >";
+  string next2;
+  getline(cin, next2);
   system("clear");
   killer_print_police();
   cout << "the police report came in!" << endl;
@@ -322,17 +333,19 @@ void number_printcrystal(){ //no input parameters, no return, function to print 
 void number_instructions(){
   cout << "destinated number" << endl;
   cout << "Instructions: In this game, you have six guesses to find your" << endl;
-  cout << "destinated number which is within the range 0 - 99. Each time" << endl;
+  cout << "destinated number which is within the range 1 - 100. Each time" << endl;
   cout << "you guess a number, unless the number guessed is your destinated" << endl;
   cout << "number, the fairy will tell you if the number you guessed " << endl;
   cout << "is larger or smaller than you destined number." << endl;
 }
+
 int number_main(){
-  //get a random number from the range 0 - 99
+  //get a random number from the range 1 - 100
   srand(time(0));
-  int destinated_num = rand() % 100;
+  int destinated_num = (rand() % 100) + 1;
   number_instructions();
   //for loop that give 7 chances to the player to guess the answer
+  int range[2]={1,100};
   for (int i = 0; i < 7; ++i){
     number_printcrystal();
     //get guess
@@ -343,9 +356,13 @@ int number_main(){
     //check if guess is larger, smaller or equal to answer
     if (guess > destinated_num){
       cout << "Your destined number is smaller than what you guessed!" << endl;
+      range[1] = guess;
+      cout << "the number is within " << range[0] << " and " << range[1] << endl;
     }
     if (guess < destinated_num){
       cout << "Your destined number is larger than what you guessed!" << endl;
+      range[0] = guess;
+      cout << "the number is within " << range[0] << " and " << range[1] << endl;
     }
     if (guess == destinated_num){
       cout << "-----------------------------------------" << endl;
@@ -437,25 +454,7 @@ cout << "    (&<>&)" << endl;
 cout << "     ~~~~" << endl;
 cout << "YOU USED SPECAIL ATTACK: SWORD OF POWER!" << endl;
 }
-void rps_printwin(){//input parameter and return none, fucntion prints victory sign
-cout << "  ___      ___  __     ______  ___________  ______     _______   ___  ___ "  << endl;
-cout << "|\"  \\    /\"  ||\" \\   /\" _  \"\\(\"     _   \")/    \" \\   /\"      \\ |\"  \\/\"  | "  << endl;
-cout << "\\   \\  //  / ||  | (: ( \\___))__/  \\\\__/// ____  \\ |:        | \\   \\  /  "  << endl;
-cout << " \\\\  \\/. ./  |:  |  \\/ \\        \\\\_ /  /  /    ) :)|_____/   )  \\\\  \\/   "  << endl;
-cout << "  \\.    //   |.  |  //  \\ _     |.  | (: (____/ //  //      /   /   /    "  << endl;
-cout << "   \\\\   /    /\\  |\\(:   _) \\    \\:  |  \\        /  |:  __   \\  /   /     "  << endl;
-cout << "    \\__/    (__\\_|_)\\_______)    \\__|   \\\"_____/   |__|  \\___)|___/   "  << endl;
-}
 
-void rps_printlose(){//input parameter and return none, fucntion prints lose sign
-cout << "  ___        ______    ________  _______  " << endl;
-cout << "|\"  |      /    \" \\  /\"       )/\"     \"| " << endl;
-cout << "||  |     // ____  \\(:   \\___/(: ______) " << endl;
-cout << "|:  |    /  /    ) :)\\___  \\   \\/    |   " << endl;
-cout << "\\  |___(: (____/ //  __/  \\\\  // ___)_  " << endl;
-cout << "( \\_|:  \\\\        /  /\" \\   :)(:      \"| " << endl;
-cout << "\\_______)\\\"_____/  (_______/  \\_______)" << endl;
-}
 
 char rps_devils_choice(){//input parameter none, fucntion takes random computer choice of either rock paper or scissor, return: the choice of the computer
   srand(time(0));
@@ -544,16 +543,16 @@ int rps_main(){ //main for rock paper scissors
       rps_printhero(hero_health - 1);
     }
     if (devil_health <= 0){
-      rps_printwin();
+      cout << "You defeated the devil!" << endl;
       return 1;
     }
     if (hero_health <= 0){
-      rps_printlose();
+      cout << "Oh no...perhaps the devil is too strong for you. You lost!" << endl;
       return 0;
     }
   }
 }
 int main(){
-  rps_main();
+  ttt_main();
 
 }
