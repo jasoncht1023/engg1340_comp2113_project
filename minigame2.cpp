@@ -67,7 +67,9 @@ int ttt_playerdecision(char grid[3][3], char player){ //input parameters: charac
     }
   }
   cout << "incorrect input" << endl;
-  return 0;
+  cout << "try again: ";
+  cin >> player;
+  ttt_playerdecision(grid, player);
 }
 
 int ttt_devildecision(char grid[3][3], char devil){       //same as above, except it is for the computer and not the player
@@ -146,6 +148,7 @@ bool game_tictactoe(){                       //the main for tic tac toe
   cout << "press return to continue > ";
   getline(cin, con2);
   system("clear");
+  cout << "Please input your move (1-9) only when \"Your move: \" has shown\n";
   ttt_printgrid(ttt_grid);
   while (num_selectable >= 0){                //a while loop that keeps going until there are no seleactable choices and a victory or a tie is achieved
     cout << "Your move: ";
@@ -247,7 +250,7 @@ bool game_killer(){ //main for the killer games
   string people[5] = {"count", "dutches", "solomon", "ted", "escobar"};
   string clothes[5] = {"uniform", "tuxedo", "cloak", "hoodie", "raincoat"};
   string location[5] = {"cementary", "school", "castle", "hospital", "museum"};
-  string weapon[5] = {"poisen", "glock16", "chainsaw", "katana", "brick"};
+  string weapon[5] = {"poison", "glock16", "chainsaw", "katana", "brick"};
   //get shuffled arrays
   killer_randomise(clothes);
   killer_randomise(location);
@@ -489,7 +492,7 @@ string rps_who_wins(char devil, string hero){ //input parameter takes in the use
   }
 }
 
-bool game_rockpaperscissors(){  //main for rock paper scissors
+bool game_rockpaperscissors(){ //main for rock paper scissors
   rps_instructions();
   //health of players
   int special = 0;
@@ -526,12 +529,13 @@ bool game_rockpaperscissors(){  //main for rock paper scissors
     }
     if (devil_health <= 0){
       cout << "You defeated the devil!" << endl;
+      cin.get();
       return 1;
     }
     if (hero_health <= 0){
       cout << "Oh no...perhaps the devil is too strong for you. You lost!" << endl;
+      cin.get();
       return 0;
     }
   }
 }
-
