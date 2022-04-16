@@ -1,0 +1,9 @@
+2
+g s s ? w s s s s s s s s
+s s w s g s w w w w w w s
+s w w w s s g ? w ? s w s
+g s s w w w w w w w s w s
+? w s w p s s s s s g w ?
+s w ? w s w s w s w w w s
+g s s s s w s w s s s s s
+4 4 2 1 0 1
